@@ -1,17 +1,43 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faPlay } from '@fortawesome/free-solid-svg-icons';
-import PaginateIndicator from './PaginateIndicator';
+import { useEffect, useState } from 'react';
 
-function Movie() {
+type propMovies = {
+  dataMovies: MovieType;
+};
+
+type MovieType = {
+  id: number;
+  title: string;
+  overview: string;
+  backdrop_path: string;
+};
+
+function Movie({ dataMovies }: propMovies) {
+  const [blurImg, setBlurImg] = useState(true);
+  // console.log(`dataMovies`, dataMovies);
+  const src = `https://image.tmdb.org/t/p/original${dataMovies.backdrop_path}`;
+  useEffect(() => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+      console.log('Image loaded');
+      setTimeout(() => {
+        setBlurImg(false);
+      }, 200);
+    };
+  }, [src]);
   return (
-    <div>
+    <div className={`${blurImg ? 'bg-black' : ''}`}>
       <img
-        src="./img/banner.png"
+        src={src}
         alt=""
-        className="aspect-video brightness-50 w-full"
+        className={`aspect-video brightness-50 w-full ${
+          blurImg ? 'blur-sm' : ''
+        }`}
       />
-      <div className="absolute bottom-[10%] left-8 w-1/2 sm:w-1/3">
-        {/* <p className="mb-2 font-bold sm:text-[2vw]">Inside Out 2</p> */}
+      <div className={`absolute bottom-[10%] left-8 w-1/2 sm:w-1/3 `}>
+        <p className="mb-2 font-bold sm:text-[2vw]">{dataMovies.title}</p>
         <p className="mb-2 font-bold sm:text-[2vw]">
           <img
             src="https://occ-0-58-325.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABSt7WGNoCqwHOq2BBgoLriIPF6_VLPfNm26XcoaQ9ri_NT8BOod4BzOVhnZWHlDiddcUXkQELB0toLiSJ-j3r5LQlqNcg_xz97FDF27hCufRqGSEivSZeO0MVH-7Xk3bGnoyt-UhVwFTwdLsvpk-ZQKKknyIT3obmsuRwKkNoE1xSbLZOsyQAQ.webp?r=912"
@@ -28,11 +54,7 @@ function Movie() {
         <div>
           <div className="mt-4 hidden text-[1.2vw] sm:block">
             {/* <p className="mb-2 font-bold">Overview</p> */}
-            <p>
-              When their dad unexpectedly dies, two estranged sisters are
-              brought together when they find his stash of millions behind a
-              wall. But should they keep it?
-            </p>
+            <p>{dataMovies.overview}</p>
           </div>
           <div className="mt-4">
             <button className="text-10 mr-2 rounded bg-white px-4 py-2 text-black lg:text-md">
@@ -45,7 +67,6 @@ function Movie() {
           </div>
         </div>
       </div>
-      <PaginateIndicator />
     </div>
   );
 }
