@@ -7,7 +7,7 @@ interface Movie {
 }
 
 function PaginateIndicator({ movies, activeMovieId, setActiveMovieId }: Movie) {
-  console.log(`movies`, movies, activeMovieId);
+  // console.log(`movies`, movies, activeMovieId);
   const handleActiveMovie = (id: number) => {
     setActiveMovieId(id);
   };

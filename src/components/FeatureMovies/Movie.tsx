@@ -21,7 +21,7 @@ function Movie({ dataMovies }: propMovies) {
     const img = new Image();
     img.src = src;
     img.onload = () => {
-      console.log('Image loaded');
+      // console.log('Image loaded');
       setTimeout(() => {
         setBlurImg(false);
       }, 200);
