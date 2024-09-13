@@ -6,7 +6,9 @@ function Header() {
     <header className="flex h-14 bg-black items-center justify-between text-white px-8">
       <div className="flex items-center gap-4 text-sm ">
         <img src="./img/netflix.png" className="w-16 sm:w-28" alt="" />
-        <a href="">Home</a>
+        <a href="" className="">
+          Home
+        </a>
         <a href="">Series</a>
         <a href="">Films</a>
       </div>

@@ -26,7 +26,7 @@ function MovieCard({ media }: MovieCard) {
   return (
     <div className="rounded-lg border border-slate-800 relative shadow-md">
       {media_type === 'tv' && (
-        <p className="absolute top-1 right-1 rounded text-[0.8vw] bg-red-00 p-1">
+        <p className="absolute top-1 right-1 rounded text-[0.8vw] bg-red-600 p-1">
           TV Show
         </p>
       )}
