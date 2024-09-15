@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { groupBy } from 'lodash';
+import Loading from '../components/Loading';
 
 type MovieDetails = {
   release_dates?: {
@@ -38,9 +39,11 @@ type MovieDetails = {
 function MovieDetails() {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState<MovieDetails>({});
+  const [isLoading, setIsLoading] = useState(false);
   console.log(id);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(
         `https://api.themoviedb.org/3/movie/${id}?append_to_response=release_dates,credits`,
@@ -58,6 +61,9 @@ function MovieDetails() {
       })
       .catch((err) => {
         console.log(`err`, err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [id]);
 
@@ -76,13 +82,15 @@ function MovieDetails() {
   const group = groupBy(crews, 'job');
   console.log({ crews, group });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="relative text-white overflow-hidden">
       <img
         className="absolute inset-0 brightness-[0.2]"
-        src={`
-            https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}
-        `}
+        src={`https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`}
         alt=""
       />
       <div className="relative mx-auto flex max-w-screen-xl gap-6 px-6 py-10 lg:gap-8">
