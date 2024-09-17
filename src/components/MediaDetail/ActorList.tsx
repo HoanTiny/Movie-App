@@ -1,4 +1,10 @@
+import { useState } from 'react';
 import ActorInfo from './ActorInfo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleChevronDown,
+  faCircleChevronUp,
+} from '@fortawesome/free-solid-svg-icons';
 
 type propActorList = {
   actors: Array<{
@@ -10,26 +16,32 @@ type propActorList = {
 };
 
 function ActorList({ actors }: propActorList) {
+  const [isShowMore, setIsShowMore] = useState(false);
+  const currentActor = actors.slice(0, isShowMore ? actors.length : 4);
   console.log('actors', actors);
 
   return (
     <div>
       <p className="mb-4 text-[1.4vw] font-bold">Actors</p>
-      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
-        {actors.map((actor) => (
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 ">
+        {currentActor.map((actor) => (
           <ActorInfo key={actor.id} actor={actor} />
         ))}
-        {/* <ActorInfo />
-        <ActorInfo />
-        <ActorInfo />
-        <ActorInfo /> */}
       </div>
-      {/* <p
-        className="mt-1 cursor-pointer"
+      <p
+        className="my-4 cursor-pointer"
         onClick={() => setIsShowMore(!isShowMore)}
       >
-        {isShowMore ? "Show Less" : "Show More"}
-      </p> */}
+        {isShowMore ? (
+          <>
+            <FontAwesomeIcon icon={faCircleChevronUp} /> Show Less
+          </>
+        ) : (
+          <>
+            <FontAwesomeIcon icon={faCircleChevronDown} /> Show More
+          </>
+        )}
+      </p>
     </div>
   );
 }

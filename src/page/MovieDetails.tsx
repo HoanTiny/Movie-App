@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Loading from '../components/Loading';
-import Banner from '../components/MediaDetail/Banner';
-import ActorList from '../components/MediaDetail/ActorList';
+import Loading from '@components/Loading';
+import Banner from '@components/MediaDetail/Banner';
+import ActorList from '@components/MediaDetail/ActorList';
+import RelatedMediaList from '@components/MediaDetail/RelatedMediaList';
+import { MediaListType } from '@components/MediaList';
+import MovieInformation from '@components/MediaDetail/MovieInfomation';
 
 export type MovieDetails = {
   release_dates?: {
@@ -37,6 +40,13 @@ export type MovieDetails = {
       job: string;
     }>;
   };
+  recommendations?: {
+    results: Array<MediaListType>;
+  };
+  revenue?: number;
+  origin_country?: Array<string>;
+  status?: string;
+  budget?: number;
 };
 
 function MovieDetails() {
@@ -49,7 +59,7 @@ function MovieDetails() {
     setIsLoading(true);
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/${id}?append_to_response=release_dates,credits`,
+        `https://api.themoviedb.org/3/movie/${id}?append_to_response=release_dates,credits,recommendations`,
         {
           headers: {
             accept: 'application/json',
@@ -59,7 +69,8 @@ function MovieDetails() {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        console.log(`response`, response.data);
+
         setMovieDetails(response.data);
       })
       .catch((err) => {
@@ -77,13 +88,16 @@ function MovieDetails() {
   return (
     <div>
       <Banner movieDetails={movieDetails} />
-      <div className="bg-black text-white ">
+      <div className="bg-black text-white text-[1.2vw]">
         <div className="flex gap-6 mx-auto max-w-screen-xl px-6 py-10 ">
           <div className="flex-[2]">
             <ActorList actors={movieDetails.credits?.cast || []} />
+            <RelatedMediaList
+              recomendations={movieDetails.recommendations?.results || []}
+            />
           </div>
           <div className="flex-1">
-            <p>Infomation</p>
+            <MovieInformation movieInfo={movieDetails} />
           </div>
         </div>
       </div>

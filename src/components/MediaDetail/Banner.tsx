@@ -32,12 +32,10 @@ function Banner({ movieDetails }: BannerProps) {
         src={`https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`}
         alt=""
       />
-      <div className="relative mx-auto flex max-w-screen-xl gap-6 px-6 py-10 lg:gap-8">
+      <div className="relative mx-auto flex max-w-screen-xl gap-6 px-6 md:py-10 xs:py-4 lg:gap-8 items-center">
         <div className="flex-1">
           <img
-            src={`
-              https://image.tmdb.org/t/p/original${movieDetails.poster_path}
-          `}
+            src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
             alt=""
           />
         </div>
@@ -74,15 +72,15 @@ function Banner({ movieDetails }: BannerProps) {
               <p>😀</p>
             </div>
             <div className="mt-4 flex gap-4">
-              <div className=" border border-white rounded-full w-10 h-10 bg- flex items-center justify-center">
+              <div className=" border border-white rounded-full w-[3vw] h-[3vw] bg- flex items-center justify-center">
                 <FontAwesomeIcon icon={faList} />
               </div>
 
-              <div className=" border border-white rounded-full w-10 h-10 bg- flex items-center justify-center">
+              <div className=" border border-white rounded-full w-[3vw] h-[3vw] bg- flex items-center justify-center">
                 <FontAwesomeIcon icon={faHeart} />
               </div>
 
-              <div className=" border border-white rounded-full w-10 h-10 bg- flex items-center justify-center">
+              <div className=" border border-white rounded-full w-[3vw] h-[3vw] bg- flex items-center justify-center">
                 <FontAwesomeIcon icon={faBookmark} />
               </div>
               <button>

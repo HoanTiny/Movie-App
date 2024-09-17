@@ -9,9 +9,9 @@ type actorInfoProp = {
 
 function ActorInfo({ actor }: actorInfoProp) {
   return (
-    <div className="border border-slate-300 shadow-sm rounded-lg bg-black ">
+    <div className="rounded-lg border border-slate-300 bg-black shadow-sm lg:">
       <img
-        className="rounded-lg"
+        className="rounded-lg w-full"
         src={
           actor.profile_path
             ? `https://media.themoviedb.org/t/p/w276_and_h350_face/${actor.profile_path}`

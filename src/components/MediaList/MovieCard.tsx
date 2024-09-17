@@ -7,7 +7,6 @@ type MovieCard = {
 };
 
 function MovieCard({ media }: MovieCard) {
-  console.log(`media`, media);
   const {
     poster_path,
     title,
@@ -19,8 +18,8 @@ function MovieCard({ media }: MovieCard) {
     id,
   } = media;
   return (
-    <Link to={`/movie/${id}`}>
-      <div className="rounded-lg border border-slate-800 relative shadow-md cursor-pointer">
+    <Link to={`/movie/${id}`} className="rounded-lg border border-slate-800">
+      <div className=" relative shadow-md cursor-pointer">
         {media_type === 'tv' && (
           <p className="absolute top-1 right-1 rounded text-[0.8vw] bg-red-600 p-1">
             TV Show
