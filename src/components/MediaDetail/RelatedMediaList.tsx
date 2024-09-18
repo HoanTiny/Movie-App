@@ -6,7 +6,6 @@ interface RelatedMediaListProps {
 }
 
 function RelatedMediaList({ recomendations }: RelatedMediaListProps) {
-  console.log(`recomendations`, recomendations);
   return (
     <div>
       <p className="mb-4 text-[1.4vw] font-bold">More Like This</p>

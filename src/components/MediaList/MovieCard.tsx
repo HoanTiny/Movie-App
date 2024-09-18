@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MediaListType } from '.';
 import CircularProgressBar from './CircularProgressBar';
+import ImageComp from '@components/Image';
 
 type MovieCard = {
   media: MediaListType;
@@ -25,9 +26,12 @@ function MovieCard({ media }: MovieCard) {
             TV Show
           </p>
         )}
-        <img
+
+        <ImageComp
           className="rounded-t-lg"
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          width={200}
+          height={300}
         />
         <div className="px-4  relative -top-[1.5vw]">
           <CircularProgressBar

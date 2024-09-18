@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import MovieCard from './MovieCard';
-import axios from 'axios';
+import { useFetch } from '@hooks/useFetch';
+import { useState } from 'react';
 import { Tab } from '../../libs/contants';
+import MovieCard from './MovieCard';
 export type MediaListType = {
   id: number;
   poster_path: string;
@@ -19,31 +19,12 @@ type MediaListProps = {
 };
 
 function MediaList({ title, tabs }: MediaListProps) {
-  const [mediaList, setMediaList] = useState<MediaListType[]>([]);
+  // const [mediaList, setMediaList] = useState<MediaListType[]>([]);
   const [activeTabId, setActiveTabId] = useState<string>(tabs[0]?.id);
-  useEffect(() => {
-    const url = tabs.find((tab) => tab.id === activeTabId)?.url;
-    console.log(url, 12122);
+  const urlMediaList = tabs.find((tab) => tab.id === activeTabId)?.url;
 
-    if (url) {
-      axios
-        .get(url, {
-          headers: {
-            accept: 'application/json',
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMGVkMjgzNTFiMjZlZGNiMGExMzg2MzM2YjI5MDBhZiIsIm5iZiI6MTcyNjAyMTU0Mi4xNjYzNTgsInN1YiI6IjY2ZGZiYzIyYTZjMmM4ODA0MTBkOTc3ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zMedxNZkzdZeheGmk4xb9V68jz74dACpe4wBSVSg6dE',
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          setMediaList(response.data.results.slice(0, 12));
-        })
-        .catch((err) => {
-          console.log(`err`, err);
-        });
-    }
-  }, [activeTabId, tabs]);
-  // console.log(`mediaList`, mediaList);
+  const { data } = useFetch({ url: `${urlMediaList}` });
+  const mediaList = data?.results ? data.results.slice(0, 12) : [];
 
   return (
     <div className="px-8 text-[1.2vw] py-10 bg-black text-white">

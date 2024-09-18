@@ -1,12 +1,11 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Loading from '@components/Loading';
-import Banner from '@components/MediaDetail/Banner';
 import ActorList from '@components/MediaDetail/ActorList';
+import Banner from '@components/MediaDetail/Banner';
+import MovieInformation from '@components/MediaDetail/MovieInfomation';
 import RelatedMediaList from '@components/MediaDetail/RelatedMediaList';
 import { MediaListType } from '@components/MediaList';
-import MovieInformation from '@components/MediaDetail/MovieInfomation';
+import { useFetch } from '@hooks/useFetch';
+import { useParams } from 'react-router-dom';
 
 export type MovieDetails = {
   release_dates?: {
@@ -47,39 +46,15 @@ export type MovieDetails = {
   origin_country?: Array<string>;
   status?: string;
   budget?: number;
+  results?: Array<MediaListType>;
 };
 
 function MovieDetails() {
   const { id } = useParams();
-  const [movieDetails, setMovieDetails] = useState<MovieDetails>({});
-  const [isLoading, setIsLoading] = useState(false);
-  console.log(id);
 
-  useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}?append_to_response=release_dates,credits,recommendations`,
-        {
-          headers: {
-            accept: 'application/json',
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMGVkMjgzNTFiMjZlZGNiMGExMzg2MzM2YjI5MDBhZiIsIm5iZiI6MTcyNjAyMTU0Mi4xNjYzNTgsInN1YiI6IjY2ZGZiYzIyYTZjMmM4ODA0MTBkOTc3ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zMedxNZkzdZeheGmk4xb9V68jz74dACpe4wBSVSg6dE',
-          },
-        }
-      )
-      .then((response) => {
-        console.log(`response`, response.data);
-
-        setMovieDetails(response.data);
-      })
-      .catch((err) => {
-        console.log(`err`, err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [id]);
+  const { data: movieDetails, isLoading } = useFetch({
+    url: `/movie/${id}?append_to_response=release_dates,credits,recommendations`,
+  });
 
   if (isLoading) {
     return <Loading />;

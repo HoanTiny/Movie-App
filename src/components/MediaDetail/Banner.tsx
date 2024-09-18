@@ -4,13 +4,13 @@ import CircularProgressBar from '../MediaList/CircularProgressBar';
 import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
 import { groupBy } from 'lodash';
 import { MovieDetails } from '../../page/MovieDetails';
+import ImageComp from '@components/Image';
 
 interface BannerProps {
   movieDetails: MovieDetails;
 }
 
 function Banner({ movieDetails }: BannerProps) {
-  console.log(`movieDetails`, movieDetails);
   const certification = (
     (movieDetails.release_dates?.results || []).find(
       (result) => result.iso_3166_1 === 'US'
@@ -21,22 +21,23 @@ function Banner({ movieDetails }: BannerProps) {
     .filter((crew) => ['Director', 'Screenplay', 'Writer'].includes(crew.job))
     .map((crew) => ({ id: crew.id, job: crew.job, name: crew.name }));
 
-  console.log(`crew`, crews);
-
   const group = groupBy(crews, 'job');
-  console.log({ crews, group });
   return (
     <div className="relative text-white overflow-hidden">
-      <img
-        className="absolute inset-0 brightness-[0.2]"
+      <ImageComp
+        width={1280}
+        height={800}
+        className="absolute inset-0 brightness-[0.2] w-full"
         src={`https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`}
-        alt=""
       />
+
       <div className="relative mx-auto flex max-w-screen-xl gap-6 px-6 md:py-10 xs:py-4 lg:gap-8 items-center">
         <div className="flex-1">
-          <img
+          <ImageComp
+            width={600}
+            height={900}
             src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
-            alt=""
+            className=""
           />
         </div>
 
