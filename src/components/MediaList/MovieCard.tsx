@@ -19,7 +19,10 @@ function MovieCard({ media }: MovieCard) {
     id,
   } = media;
   return (
-    <Link to={`/movie/${id}`} className="rounded-lg border border-slate-800">
+    <Link
+      to={media_type === 'tv' ? `/tv/${id}` : `/movie/${id}`}
+      className="rounded-lg border border-slate-800"
+    >
       <div className=" relative shadow-md cursor-pointer">
         {media_type === 'tv' && (
           <p className="absolute top-1 right-1 rounded text-[0.8vw] bg-red-600 p-1">
@@ -28,7 +31,7 @@ function MovieCard({ media }: MovieCard) {
         )}
 
         <ImageComp
-          className="rounded-t-lg"
+          className="rounded-t-lg w-full"
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}
           width={200}
           height={300}

@@ -5,7 +5,7 @@ interface MovieInformationProps {
   movieInfo: MovieDetails;
 }
 
-function MovieInformation({ movieInfo = {} }: MovieInformationProps) {
+function MovieInformation({ movieInfo }: MovieInformationProps) {
   return (
     <div className="">
       <p className="text-[1.4vw] font-bold mb-4">Movie Information</p>

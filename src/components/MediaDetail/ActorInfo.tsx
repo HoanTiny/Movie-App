@@ -6,6 +6,7 @@ type actorInfoProp = {
     profile_path: string;
     name: string;
     character: string;
+    episodeCount?: number;
   };
 };
 
@@ -26,7 +27,7 @@ function ActorInfo({ actor }: actorInfoProp) {
       <div className="p-3">
         <p>{actor.name}</p>
         <p>{actor.character}</p>
-        {/* <p>18</p> */}
+        {actor.episodeCount && <p>{actor.episodeCount} Episodes</p>}
       </div>
     </div>
   );

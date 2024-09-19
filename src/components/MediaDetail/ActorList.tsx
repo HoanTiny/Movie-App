@@ -18,7 +18,7 @@ type propActorList = {
 function ActorList({ actors }: propActorList) {
   const [isShowMore, setIsShowMore] = useState(false);
   const currentActor = actors.slice(0, isShowMore ? actors.length : 4);
-
+  console.log(`actors`, actors);
   return (
     <div>
       <p className="mb-4 text-[1.4vw] font-bold">Actors</p>

@@ -23,7 +23,11 @@ function MediaList({ title, tabs }: MediaListProps) {
   const [activeTabId, setActiveTabId] = useState<string>(tabs[0]?.id);
   const urlMediaList = tabs.find((tab) => tab.id === activeTabId)?.url;
 
-  const { data } = useFetch({ url: `${urlMediaList}` });
+  type FetchDataType = {
+    results: MediaListType[];
+  };
+
+  const { data } = useFetch<FetchDataType>({ url: `${urlMediaList}` });
   const mediaList = data?.results ? data.results.slice(0, 12) : [];
 
   return (

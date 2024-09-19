@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { MovieDetails } from '@page/MovieDetails';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -13,8 +12,8 @@ interface FetchParams {
   headers?: Record<string, string>;
 }
 
-export function useFetch({ url, headers = {} }: FetchParams) {
-  const [data, setData] = useState<MovieDetails>({});
+export function useFetch<T>({ url, headers = {} }: FetchParams) {
+  const [data, setData] = useState<T>({} as T);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
