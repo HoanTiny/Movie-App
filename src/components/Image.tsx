@@ -5,12 +5,25 @@ type ImageProps = {
   width: number;
   height: number;
   className: string;
+  checkBanner?: boolean;
 };
 
-function ImageComp({ src, width, height, className }: ImageProps) {
+function ImageComp({
+  src,
+  width,
+  height,
+  className,
+  checkBanner = false,
+}: ImageProps) {
   const [currentSrc, setCurrentSrc] = useState(
     `https://placehold.co/${width}x${height}?text=Loading`
   );
+
+  useEffect(() => {
+    if (checkBanner) {
+      setCurrentSrc(`https://placehold.co/${width}x${height}/black`);
+    }
+  }, [checkBanner, width, height]);
 
   useEffect(() => {
     const imageToLoad = new Image();

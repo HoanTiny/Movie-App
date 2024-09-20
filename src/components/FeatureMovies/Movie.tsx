@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+import ImageComp from '@components/Image';
 
 type propMovies = {
   dataMovies: MovieType;
@@ -29,12 +30,11 @@ function Movie({ dataMovies }: propMovies) {
   }, [src]);
   return (
     <div className={`${blurImg ? 'bg-black' : ''}`}>
-      <img
+      <ImageComp
+        width={1280}
+        height={800}
         src={src}
-        alt=""
-        className={`aspect-video brightness-50 w-full ${
-          blurImg ? 'blur-sm' : ''
-        }`}
+        className={`aspect-video brightness-50 w-full`}
       />
       <div className={`absolute bottom-[10%] left-8 w-1/2 sm:w-1/3 `}>
         <p className="mb-2 font-bold sm:text-[2vw]">{dataMovies.title}</p>

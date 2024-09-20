@@ -49,7 +49,7 @@ function FeatureMovies() {
   }, [activeMovieId, movies]);
 
   return (
-    <div className="relative text-white">
+    <div className="relative text-white min-h-[800px]">
       {movies
         .filter((movie) => movie.id === activeMovieId)
         .map((movie) => (

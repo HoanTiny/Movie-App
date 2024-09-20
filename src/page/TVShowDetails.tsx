@@ -2,14 +2,15 @@
 import Loading from '@components/Loading';
 import ActorList from '@components/MediaDetail/ActorList';
 import Banner from '@components/MediaDetail/Banner';
-import MovieInformation from '@components/MediaDetail/MovieInfomation';
 import RelatedMediaList from '@components/MediaDetail/RelatedMediaList';
+import SeasonList from '@components/MediaDetail/SeasonList';
+import TvInformation from '@components/MediaDetail/TvInformation';
 import { MediaListType } from '@components/MediaList';
 // import { MediaListType } from '@components/MediaList';
 import { useFetch } from '@hooks/useFetch';
 import { useParams } from 'react-router-dom';
 
-type tvType = {
+export type tvType = {
   content_ratings: {
     results: Array<{
       iso_3166_1: string;
@@ -45,6 +46,24 @@ type tvType = {
   recommendations?: {
     results: Array<MediaListType>;
   };
+  origin_country: Array<string>;
+  original_name: string;
+  status: string;
+  networks: Array<{
+    id: string;
+    logo_path: string;
+    name: string;
+  }>;
+  seasons: Array<{
+    air_date: string;
+    episode_count: number;
+    id: number;
+    name: string;
+    poster_path: string;
+    vote_average: number;
+    overview: string;
+    season_number: number;
+  }>;
 };
 
 function MovieDetails() {
@@ -97,12 +116,14 @@ function MovieDetails() {
               }))}
             />
 
+            <SeasonList seasons={tvDetails.seasons} />
+
             <RelatedMediaList
               recomendations={tvDetails?.recommendations?.results || []}
             />
           </div>
           <div className="flex-1">
-            {tvDetails && <MovieInformation movieInfo={tvDetails} />}
+            {tvDetails && <TvInformation movieInfo={tvDetails} />}
           </div>
         </div>
       </div>

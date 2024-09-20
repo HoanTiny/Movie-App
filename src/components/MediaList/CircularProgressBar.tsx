@@ -44,7 +44,7 @@ function CircularProgressBar({
           x={`${size / 2}vw`}
           y={`${size / 2}vw`}
           fill="white"
-          fontSize="0.8vw"
+          fontSize="0.7vw"
           alignmentBaseline="middle"
           textAnchor="middle"
         >
