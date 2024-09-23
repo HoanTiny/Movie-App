@@ -64,6 +64,12 @@ export type tvType = {
     overview: string;
     season_number: number;
   }>;
+  videos: {
+    results: Array<{
+      key: string;
+      type: string;
+    }>;
+  };
 };
 
 function MovieDetails() {
@@ -104,6 +110,10 @@ function MovieDetails() {
         overview={tvDetails?.overview || ''}
         certification={certification || ''}
         crews={crews}
+        trailerVideoKey={
+          tvDetails?.videos?.results.find((v) => v.type === 'Trailer')?.key ||
+          ''
+        }
       />
       <div className="bg-black text-white text-[1.2vw]">
         <div className="flex gap-6 mx-auto max-w-screen-xl px-6 py-10 ">

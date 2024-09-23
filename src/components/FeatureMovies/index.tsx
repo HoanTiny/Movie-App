@@ -1,40 +1,57 @@
-import axios from 'axios';
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import Movie from './Movie';
 import PaginateIndicator from './PaginateIndicator';
+import { useFetch } from '@hooks/useFetch';
+// import axios from 'axios';
 
 export type MovieType = {
   id: number;
   title: string;
   overview: string;
   backdrop_path: string;
+  poster_path: string;
+  type?: string; // Add the type property as optional
+  site?: string; // Add the site property as optional
+  key?: string; // Add the key property as optional
+};
+
+type Test = {
+  results: Array<MovieType>;
 };
 function FeatureMovies() {
-  const [movies, setMovies] = useState<MovieType[]>([]);
+  // const [movies, setMovies] = useState<MovieType[]>([]);
   const [activeMovieId, setActiveMovieId] = useState<number>();
-  useEffect(() => {
-    axios
-      .get('https://api.themoviedb.org/3/movie/popular', {
-        headers: {
-          accept: 'application/json',
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMGVkMjgzNTFiMjZlZGNiMGExMzg2MzM2YjI5MDBhZiIsIm5iZiI6MTcyNjAyMTU0Mi4xNjYzNTgsInN1YiI6IjY2ZGZiYzIyYTZjMmM4ODA0MTBkOTc3ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zMedxNZkzdZeheGmk4xb9V68jz74dACpe4wBSVSg6dE',
-        },
-      })
-      .then((response) => {
-        const popularMovies = response.data.results.slice(0, 4);
-        setMovies(popularMovies);
-        setActiveMovieId(popularMovies[0].id);
 
-        popularMovies.forEach((movie: { poster_path: string }) => {
-          const img = new Image();
-          img.src = movie.poster_path; // Assuming 'poster_path' is the image URL for each movie
-        });
-      })
-      .catch((err) => {
-        console.log(`err`, err);
-      });
-  }, []);
+  const { data: popularMovies = {} as Test } = useFetch<Test>({
+    url: '/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc',
+  });
+
+  const { data: videoResponse = {} as Test } = useFetch<Test>(
+    {
+      url: `/movie/${activeMovieId}/videos`,
+    },
+    { enabled: !!activeMovieId }
+  );
+
+  // const temp = (videoResponse?.results || []).find(
+  //   (video) => video.type === "Trailer" && video.site === "YouTube",
+  // )?.key;
+
+  console.log({ videoResponse });
+
+  const movies = popularMovies.results?.slice(0, 4);
+
+  useEffect(() => {
+    if (movies) {
+      setActiveMovieId(movies[0].id);
+    }
+
+    movies?.forEach((movie: { poster_path: string }) => {
+      const img = new Image();
+      img.src = movie.poster_path; // Assuming 'poster_path' is the image URL for each movie
+    });
+  }, [JSON.stringify(movies)]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,12 +66,22 @@ function FeatureMovies() {
   }, [activeMovieId, movies]);
 
   return (
-    <div className="relative text-white min-h-[800px]">
-      {movies
-        .filter((movie) => movie.id === activeMovieId)
-        .map((movie) => (
-          <Movie key={movie.id} dataMovies={movie} />
-        ))}
+    <div className="relative text-white min-h-[54vw]">
+      {movies &&
+        movies
+          .filter((movie) => movie.id === activeMovieId)
+          .map((movie) => (
+            <Movie
+              key={movie.id}
+              dataMovies={movie}
+              trailerVideoKey={
+                (videoResponse?.results || []).find(
+                  (video) =>
+                    video.type === 'Trailer' && video.site === 'YouTube'
+                )?.key
+              }
+            />
+          ))}
 
       {activeMovieId !== undefined && (
         <PaginateIndicator

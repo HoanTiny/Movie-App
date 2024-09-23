@@ -12,30 +12,35 @@ interface FetchParams {
   headers?: Record<string, string>;
 }
 
-export function useFetch<T>({ url, headers = {} }: FetchParams) {
+export function useFetch<T>(
+  { url, headers = {} }: FetchParams,
+  { enabled }: { enabled?: boolean } = { enabled: true }
+) {
   const [data, setData] = useState<T>({} as T);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_API_HOST}${url}`, {
-        headers: {
-          ...DEFAULT_HEADERS,
-          ...headers,
-        },
-      })
-      .then((response) => {
-        console.log(`datta`, data);
-        setData(response.data);
-      })
-      .catch((err) => {
-        console.log(`err`, err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [url, JSON.stringify(headers)]);
+    if (enabled) {
+      setIsLoading(true);
+      axios
+        .get(`${import.meta.env.VITE_API_HOST}${url}`, {
+          headers: {
+            ...DEFAULT_HEADERS,
+            ...headers,
+          },
+        })
+        .then((response) => {
+          console.log(`datta`, data);
+          setData(response.data);
+        })
+        .catch((err) => {
+          console.log(`err`, err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [url, JSON.stringify(headers), enabled]);
 
   return { data, isLoading };
 }

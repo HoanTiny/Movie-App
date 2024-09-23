@@ -5,6 +5,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
 import { groupBy } from 'lodash';
 // import { MovieDetails } from '../../page/MovieDetails';
 import ImageComp from '@components/Image';
+import { useModalContext } from '@context/ModalProvider';
 
 interface BannerProps {
   // movieDetails: MovieDetails;
@@ -17,6 +18,7 @@ interface BannerProps {
   overview: string;
   certification: string;
   crews: { job: string; name: string }[];
+  trailerVideoKey: string;
 }
 
 function Banner({
@@ -29,16 +31,11 @@ function Banner({
   overview,
   certification,
   crews,
+  trailerVideoKey,
 }: BannerProps) {
-  // const certification = (
-  //   (movieDetails.release_dates?.results || []).find(
-  //     (result) => result.iso_3166_1 === 'US'
-  //   )?.release_dates || []
-  // ).find((releaseDate) => releaseDate.certification)?.certification;
+  const { onOpenPopup } = useModalContext();
 
-  // const crews = (movieDetails.credits?.crew || [])
-  //   .filter((crew) => ['Director', 'Screenplay', 'Writer'].includes(crew.job))
-  //   .map((crew) => ({ id: crew.id, job: crew.job, name: crew.name }));
+  console.log(`trailerVideoKey`, trailerVideoKey);
 
   const group = groupBy(crews, 'job');
   return (
@@ -99,11 +96,19 @@ function Banner({
               <div className=" border border-white rounded-full w-[3vw] h-[3vw] bg- flex items-center justify-center">
                 <FontAwesomeIcon icon={faBookmark} />
               </div>
-              <button>
-                <div>
-                  <FontAwesomeIcon icon={faPlay} className="mr-1" />
-                  Trailer
-                </div>
+              <button
+                onClick={() => {
+                  onOpenPopup(
+                    <iframe
+                      width="560"
+                      height="315"
+                      src={`https://www.youtube.com/embed/${trailerVideoKey}`}
+                    />
+                  );
+                }}
+              >
+                <FontAwesomeIcon icon={faPlay} className="mr-1" />
+                Trailer
               </button>
             </div>
 

@@ -48,6 +48,12 @@ export type MovieDetails = {
   status?: string;
   budget?: number;
   results?: Array<MediaListType>;
+  videos?: {
+    results: Array<{
+      key: string;
+      type: string;
+    }>;
+  };
 };
 
 function MovieDetails() {
@@ -55,7 +61,7 @@ function MovieDetails() {
 
   const { data: movieDetails = {} as MovieDetails, isLoading } =
     useFetch<MovieDetails>({
-      url: `/movie/${id}?append_to_response=release_dates,credits,recommendations`,
+      url: `/movie/${id}?append_to_response=release_dates,credits,recommendations,videos`,
     });
 
   const certification = (
@@ -84,6 +90,10 @@ function MovieDetails() {
         overview={movieDetails?.overview || ''}
         certification={certification || ''}
         crews={crews}
+        trailerVideoKey={
+          movieDetails?.videos?.results.find((v) => v.type === 'Trailer')
+            ?.key || ''
+        }
       />
       <div className="bg-black text-white text-[1.2vw]">
         <div className="flex gap-6 mx-auto max-w-screen-xl px-6 py-10 ">

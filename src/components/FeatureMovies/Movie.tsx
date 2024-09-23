@@ -1,10 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModalContext } from '@context/ModalProvider';
 import { faCircleInfo, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import ImageComp from '@components/Image';
 
 type propMovies = {
   dataMovies: MovieType;
+  trailerVideoKey?: string;
 };
 
 type MovieType = {
@@ -14,9 +15,11 @@ type MovieType = {
   backdrop_path: string;
 };
 
-function Movie({ dataMovies }: propMovies) {
+function Movie({ dataMovies, trailerVideoKey }: propMovies) {
+  const { onOpenPopup } = useModalContext();
+
   const [blurImg, setBlurImg] = useState(true);
-  // console.log(`dataMovies`, dataMovies);
+  console.log(`trailerVideoKey`, trailerVideoKey);
   const src = `https://image.tmdb.org/t/p/original${dataMovies.backdrop_path}`;
   useEffect(() => {
     const img = new Image();
@@ -30,7 +33,7 @@ function Movie({ dataMovies }: propMovies) {
   }, [src]);
   return (
     <div className={`${blurImg ? 'bg-black' : ''}`}>
-      <ImageComp
+      <img
         width={1280}
         height={800}
         src={src}
@@ -44,20 +47,24 @@ function Movie({ dataMovies }: propMovies) {
             alt=""
           />
         </p>
-
-        {/* <div>
-          <p className="mb-1 inline-block border border-gray-400 p-1 text-gray-400">
-            PG13
-          </p>
-          <p className="text-[1.2vw]">2024-06-11</p>
-        </div> */}
         <div>
           <div className="mt-4 hidden text-[1.2vw] sm:block">
             {/* <p className="mb-2 font-bold">Overview</p> */}
             <p>{dataMovies.overview}</p>
           </div>
           <div className="mt-4">
-            <button className="text-10 mr-2 rounded bg-white px-4 py-2 text-black lg:text-md">
+            <button
+              className="text-10 mr-2 rounded bg-white px-4 py-2 text-black lg:text-md"
+              onClick={() => {
+                onOpenPopup(
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${trailerVideoKey}`}
+                  />
+                );
+              }}
+            >
               <FontAwesomeIcon icon={faPlay} /> Trailer
             </button>
             <button className="text-10 rounded bg-slate-300/35 px-4 py-2 lg:text-md">
