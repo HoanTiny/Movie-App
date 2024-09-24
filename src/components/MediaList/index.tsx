@@ -20,8 +20,15 @@ type MediaListProps = {
 
 function MediaList({ title, tabs }: MediaListProps) {
   // const [mediaList, setMediaList] = useState<MediaListType[]>([]);
-  const [activeTabId, setActiveTabId] = useState<string>(tabs[0]?.id);
+  console.log(tabs);
+
+  const [activeTabId, setActiveTabId] = useState<string>(
+    // sessionStorage.getItem('activeTabId') || tabs[0]?.id
+    tabs.find((tab) => tab.active)?.id || tabs[0]?.id
+  );
   const urlMediaList = tabs.find((tab) => tab.id === activeTabId)?.url;
+  const tabActive = tabs.find((tab) => tab.id === activeTabId && tab.active);
+  console.log(`tabActive`, tabActive);
 
   type FetchDataType = {
     results: MediaListType[];
@@ -41,7 +48,10 @@ function MediaList({ title, tabs }: MediaListProps) {
               className={`px-2 py-1 rounded cursor-pointer ${
                 item.id === activeTabId ? 'active bg-white text-black' : ''
               }`}
-              onClick={() => setActiveTabId(item.id)}
+              onClick={() => {
+                setActiveTabId(item.id);
+                sessionStorage.setItem('activeTabId', item.id);
+              }}
             >
               {item.name}
             </li>

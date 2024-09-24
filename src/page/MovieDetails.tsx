@@ -96,11 +96,12 @@ function MovieDetails() {
         }
       />
       <div className="bg-black text-white text-[1.2vw]">
-        <div className="flex gap-6 mx-auto max-w-screen-xl px-6 py-10 ">
+        <div className="container">
           <div className="flex-[2]">
             <ActorList actors={movieDetails?.credits?.cast || []} />
             <RelatedMediaList
               recomendations={movieDetails?.recommendations?.results || []}
+              title="More Like This"
             />
           </div>
           <div className="flex-1">

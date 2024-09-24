@@ -3,18 +3,19 @@ import MovieCard from '@components/MediaList/MovieCard';
 
 interface RelatedMediaListProps {
   recomendations: Array<MediaListType>;
+  title: string;
 }
 
-function RelatedMediaList({ recomendations }: RelatedMediaListProps) {
-  console.log(3343434344, recomendations);
+function RelatedMediaList({ recomendations, title }: RelatedMediaListProps) {
+  // console.log(3343434344, recomendations);
 
   return (
     <div>
-      <p className="mb-4 text-[1.4vw] font-bold">More Like This</p>
+      <p className="mb-4 text-[1.4vw] font-bold">{title}</p>
 
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
-        {recomendations.map((rec) => (
-          <MovieCard key={rec.id} media={rec} />
+        {recomendations.map((rec, index) => (
+          <MovieCard key={`${rec.id}-${index}`} media={rec} />
         ))}
       </div>
     </div>

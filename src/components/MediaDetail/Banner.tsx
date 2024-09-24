@@ -35,8 +35,6 @@ function Banner({
 }: BannerProps) {
   const { onOpenPopup } = useModalContext();
 
-  console.log(`trailerVideoKey`, trailerVideoKey);
-
   const group = groupBy(crews, 'job');
   return (
     <div className="relative text-white overflow-hidden">

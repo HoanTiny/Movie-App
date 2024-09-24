@@ -2,6 +2,7 @@ import { useModalContext } from '@context/ModalProvider';
 import { faCircleInfo, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type propMovies = {
   dataMovies: MovieType;
@@ -19,7 +20,6 @@ function Movie({ dataMovies, trailerVideoKey }: propMovies) {
   const { onOpenPopup } = useModalContext();
 
   const [blurImg, setBlurImg] = useState(true);
-  console.log(`trailerVideoKey`, trailerVideoKey);
   const src = `https://image.tmdb.org/t/p/original${dataMovies.backdrop_path}`;
   useEffect(() => {
     const img = new Image();
@@ -67,10 +67,12 @@ function Movie({ dataMovies, trailerVideoKey }: propMovies) {
             >
               <FontAwesomeIcon icon={faPlay} /> Trailer
             </button>
-            <button className="text-10 rounded bg-slate-300/35 px-4 py-2 lg:text-md">
-              <FontAwesomeIcon icon={faCircleInfo} className="mr-2" />
-              More Info
-            </button>
+            <Link to={`/movie/${dataMovies.id}`}>
+              <button className="text-10 rounded bg-slate-300/35 px-4 py-2 lg:text-md">
+                <FontAwesomeIcon icon={faCircleInfo} className="mr-2" />
+                More Info
+              </button>
+            </Link>
           </div>
         </div>
       </div>

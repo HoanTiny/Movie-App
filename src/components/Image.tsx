@@ -23,15 +23,19 @@ function ImageComp({ src, width, height, className }: ImageProps) {
       return;
     }
 
+    setCurrentSrc(`https://placehold.co/${width}x${height}?text=No Image`);
+
     return () => {
       imageToLoad.src = '';
     };
-  }, [src]);
+  }, [src, height, width]);
   return (
     <img
       width={width}
       height={height}
-      className={currentSrc === src ? className : `${className} blur-md`}
+      className={
+        currentSrc === src || !src ? className : `${className} blur-md`
+      }
       src={currentSrc}
       alt=""
     />

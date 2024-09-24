@@ -38,7 +38,7 @@ function FeatureMovies() {
   //   (video) => video.type === "Trailer" && video.site === "YouTube",
   // )?.key;
 
-  console.log({ videoResponse });
+  // console.log({ videoResponse });
 
   const movies = popularMovies.results?.slice(0, 4);
 

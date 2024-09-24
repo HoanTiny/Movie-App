@@ -30,7 +30,7 @@ export function useFetch<T>(
           },
         })
         .then((response) => {
-          console.log(`datta`, data);
+          // console.log(`datta`, data);
           setData(response.data);
         })
         .catch((err) => {

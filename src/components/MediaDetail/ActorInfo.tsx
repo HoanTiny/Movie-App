@@ -1,4 +1,5 @@
 import ImageComp from '@components/Image';
+import { Link } from 'react-router-dom';
 
 type actorInfoProp = {
   actor: {
@@ -12,7 +13,10 @@ type actorInfoProp = {
 
 function ActorInfo({ actor }: actorInfoProp) {
   return (
-    <div className="rounded-lg border border-slate-300 bg-black shadow-sm lg:">
+    <Link
+      to={`/people/${actor.id}`}
+      className="rounded-lg border border-slate-300 bg-black shadow-sm lg:"
+    >
       <ImageComp
         className="rounded-lg w-full"
         src={
@@ -29,7 +33,7 @@ function ActorInfo({ actor }: actorInfoProp) {
         <p>{actor.character}</p>
         {actor.episodeCount && <p>{actor.episodeCount} Episodes</p>}
       </div>
-    </div>
+    </Link>
   );
 }
 

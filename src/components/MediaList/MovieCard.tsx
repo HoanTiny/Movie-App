@@ -32,7 +32,7 @@ function MovieCard({ media }: MovieCard) {
 
         <ImageComp
           className="rounded-t-lg w-full"
-          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          src={poster_path && `https://image.tmdb.org/t/p/w500${poster_path}`}
           width={200}
           height={300}
         />
