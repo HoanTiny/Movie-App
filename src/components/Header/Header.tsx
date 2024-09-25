@@ -15,9 +15,9 @@ function Header() {
         <a href="">Series</a>
         <a href="">Films</a>
       </div>
-      <div>
+      <Link to={`/search`}>
         <FontAwesomeIcon icon={faMagnifyingGlass} className="cursor-pointer" />
-      </div>
+      </Link>
     </header>
   );
 }

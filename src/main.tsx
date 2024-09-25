@@ -10,6 +10,7 @@ import ModalProvider from './context/ModalProvider.tsx';
 import { lazy } from 'react';
 
 const PeoplePage = lazy(() => import('@page/PeoplePage.tsx'));
+const SearchPage = lazy(() => import('@page/SearchPage.tsx'));
 const MovieDetails = lazy(() => import('@page/MovieDetails.tsx'));
 const TVShowDetails = lazy(() => import('@page/TVShowDetails.tsx'));
 const HomePage = lazy(() => import('@page/HomePage.tsx'));
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
       {
         path: '/tv/:id',
         element: <TVShowDetails />,
+      },
+
+      {
+        path: '/search',
+        element: <SearchPage />,
       },
 
       {
