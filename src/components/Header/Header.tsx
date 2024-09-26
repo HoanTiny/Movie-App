@@ -9,11 +9,11 @@ function Header() {
         <Link to="/">
           <img src="/img/netflix.png" className="w-16 sm:w-28" alt="" />
         </Link>
-        <a href="" className="">
+        <Link to={`/`} className="">
           Home
-        </a>
-        <a href="">Series</a>
-        <a href="">Films</a>
+        </Link>
+        <Link to={`/search?mediaType=movie`}>Movie</Link>
+        <Link to={`/search?mediaType=tv`}>TV Show</Link>
       </div>
       <Link to={`/search`}>
         <FontAwesomeIcon icon={faMagnifyingGlass} className="cursor-pointer" />

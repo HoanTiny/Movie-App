@@ -4,11 +4,17 @@ import FormField from './FormField';
 import MediaTypeInput from './FormInputs/MediaTypeInput';
 import GenresInput from './FormInputs/GenresInput';
 import RatingInput from './FormInputs/RatingInput';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-function SearchForm() {
-  const { handleSubmit, control } = useForm({
+function SearchForm({ setSearchFormValue }: any) {
+  const [searchParams] = useSearchParams();
+  const searchMediaType = searchParams.get('mediaType');
+  const { handleSubmit, watch, control } = useForm({
     defaultValues: {
-      mediaType: 'movie',
+      mediaType: ['tv', 'movie'].includes(searchMediaType ?? '')
+        ? searchMediaType
+        : 'movie',
       genres: [],
       rating: 'All',
     },
@@ -17,6 +23,16 @@ function SearchForm() {
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
+  const mediaType = watch();
+  // const genres = watch('genres');
+  // const rating = watch('rating');
+
+  useEffect(() => {
+    setSearchFormValue(mediaType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(mediaType)]);
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>

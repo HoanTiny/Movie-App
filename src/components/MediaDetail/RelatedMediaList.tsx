@@ -11,7 +11,7 @@ function RelatedMediaList({ recomendations, title }: RelatedMediaListProps) {
 
   return (
     <div>
-      <p className="mb-4 text-[1.4vw] font-bold">{title}</p>
+      {title && <p className="mb-4 text-[1.4vw] font-bold">{title}</p>}
 
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
         {recomendations.map((rec, index) => (
