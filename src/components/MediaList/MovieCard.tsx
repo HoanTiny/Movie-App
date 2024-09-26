@@ -23,7 +23,7 @@ function MovieCard({ media }: MovieCard) {
       to={media_type === 'tv' ? `/tv/${id}` : `/movie/${id}`}
       className="rounded-lg border border-slate-800"
     >
-      <div className=" relative shadow-md cursor-pointer">
+      <div className=" relative shadow-md cursor-pointer h-full">
         {media_type === 'tv' && (
           <p className="absolute top-1 right-1 rounded text-[0.8vw] bg-red-600 p-1">
             TV Show

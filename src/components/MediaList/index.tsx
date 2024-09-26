@@ -38,15 +38,17 @@ function MediaList({ title, tabs }: MediaListProps) {
   const mediaList = data?.results ? data.results.slice(0, 12) : [];
 
   return (
-    <div className="px-8 text-[1.2vw] py-10 bg-black text-white">
+    <div className="px-8 text-[1.2vw] py-10  bg-white text-black dark:text-white dark:bg-black">
       <div className="flex items-center gap-4 mb-6">
         <p>{title}</p>
-        <ul className="flex gap-3 border border-white rounded items-center ">
+        <ul className="flex gap-3 border border-black dark:border-white rounded items-center ">
           {tabs.map((item) => (
             <li
               key={item.id}
               className={`px-2 py-1 rounded cursor-pointer ${
-                item.id === activeTabId ? 'active bg-white text-black' : ''
+                item.id === activeTabId
+                  ? 'active bg-black text-white dark:text-black dark:bg-white'
+                  : ''
               }`}
               onClick={() => {
                 setActiveTabId(item.id);
