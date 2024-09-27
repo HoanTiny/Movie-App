@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './page/RootLayout.tsx';
 import ModalProvider from './context/ModalProvider.tsx';
 import { lazy } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 const PeoplePage = lazy(() => import('@page/PeoplePage.tsx'));
 const SearchPage = lazy(() => import('@page/SearchPage.tsx'));
@@ -64,6 +65,7 @@ createRoot(document.getElementById('root')!).render(
   // <StrictMode>
   <ModalProvider>
     <RouterProvider router={router} />
+    <Analytics />
   </ModalProvider>
   // </StrictMode>
 );
