@@ -21,7 +21,7 @@ const SearchPage: React.FC = () => {
 
   const [minRating, maxRating] =
     searchFormValue.rating === 'All'
-      ? [0, 10]
+      ? [0, 100]
       : searchFormValue.rating.split(' - ').map(Number);
 
   // console.log(`minRating`, minRating, maxRating);
