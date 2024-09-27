@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client';
 // import App from './page/HomePage.tsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import MovieDetails from './page/MovieDetails.tsx';
 import RootLayout from './page/RootLayout.tsx';
 import ModalProvider from './context/ModalProvider.tsx';
 import { lazy } from 'react';
